@@ -67,12 +67,25 @@ RedPacketContract.prototype = {
 	    var grabAddress = Blockchain.transaction.from;
 
 	    // grab the red packet
-	    var result = Blockchain.transfer(grabAddress, this.randomParts[len(redPacket.grabAddressList]);
+	    var result = Blockchain.transfer(grabAddress, this.randomParts[len(redPacket.grabAddressList)]);
 	    if (! result) {
 		throw new Error("transfer failed.");
 	    }
 	    
 	    this.packetPool.get(i).grabAddressList.push(grabAddress);
+	}
+    },
+
+    
+    getGrabs: function(hash) {
+	var redPacket = this.packetPool.get(hash);
+	if (! redPacket) {
+	    throw new Error("Sorry, this red packet doesnt't exists");
+	} else {
+	    return {
+		grabs: redPacket.grabAddressList,
+		parts: redPacket.randomParts
+	    };
 	}
     },
 
