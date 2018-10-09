@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Plasma 从入门到入坑</title>
+<!-- 2018-10-09 二 10:42 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="wwens" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="./orgstyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Plasma 从入门到入坑</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Plasma concept</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+使用可行的Challange/Response计算模型, 支持多方可扩展的链下计算
+</p>
+</blockquote>
+
+<p>
+Plasma是一个带激励的强制智能合约执行框架。这些智能合约
+</p>
+<ul class="org-ul">
+<li>通过网络手续费用于激励持续的自动化运作
+</li>
+<li>最终依赖于低层的区块链来强制交易状态的锁定
+</li>
+<li>使用欺诈证明可以强制主链上状态的锁定，周期性的将正常状态的Merkle证明广播到主链。
+</li>
+</ul>
+
+<p>
+Plasma由五个核心部分构成：
+</p>
+<ol class="org-ol">
+<li>一个激励层，用于持久的以优化的价格执行合约，以一种树状态形式来组织子链来尽可能的提高成本效率和网络交易清算的效率。
+</li>
+<li>一个MapReduce框架，构建一个状态转换的欺诈证明，在嵌套的子链中，兼容树结构同时重组状态转换为可扩展。
+</li>
+<li>一个共识机制，依赖于主链，尝试复制Nakamoto共识激励。
+</li>
+<li>一个位图的UTXO提交结构，保证在主链下的确定的状态转换，共识尽可能降低退出费用。
+</li>
+<li>允许在数据不可用或者其他Byzantine行为时可以退出，也是Plasma的运行中的关键设计点。
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> From MVP to plasma cash</h2>
+<div class="outline-text-2" id="text-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">plasma MVP</th>
+<th scope="col" class="left">plasma cash</th>
+<th scope="col" class="left">plasma trubit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">minamal viable plasma</td>
+<td class="left">plasma cash is plsama, plasma cash is cash. more scalability</td>
+<td class="left">Arbitrary-denomination payments</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Plasma MVP</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+最小可行性Plasma。
+</p>
+
+<p>
+Spec : <a href="https://ethresear.ch/t/minimal-viable-plasma/426">https://ethresear.ch/t/minimal-viable-plasma/426</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Plasma Cash</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Plasma cash是扩展性更好的Plasma，同时是一套现金系统。
+</p>
+
+<p>
+Spec :   <a href="https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298">https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298</a>
+</p>
+
+<p>
+<a href="https://ethresear.ch/t/plasma-with-client-side-validation/1103">https://ethresear.ch/t/plasma-with-client-side-validation/1103</a>
+<a href="https://karl.tech/plasma-cash-simple-spec/">https://karl.tech/plasma-cash-simple-spec/</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Sparse Merkle Tree</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<b>稀疏默克尔树</b> SMT 跟 <b>标准默克尔树</b> MT很想，只是它包含的数据是序列化有索引的，并且每个数据点都放在与该数据点索引对应的叶子上。
+</p>
+<ul class="org-ul">
+<li>数据结构MT的优势在于当判断一个数据包含在MT中时可以只需要相关的O(log(n))的数据即可，但在判断一个数据不包含在MT中时却并没有优势，仍需要全部的数据。
+</li>
+<li>数据结构SMT的优势在于判断一个数据不包含在SMT中时，仍可以优化为需要相关的O(log(n))的数据。
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="file:///Users/wwens/Downloads/sparse-merkle-tree.png" alt="sparse-merkle-tree.png" height="300px" width="300px" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Transaction</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+一个交易包含以下几个部分： 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c">[[prev_hash, prev_block, (target_block?), token_id, new_owner], signature]
+</pre>
+</div>
+
+<pre class="example">
+uid: it’s unique position in the SMT (a leaf).
+
+previousBlock: every transaction must point to the previous block where the previous transaction occurred in. This creates a chain of history. If it’s a deposit, it is “0”.
+
+denomination: This how much the the specific token holds. These denominations can be anything. If it’s used for an ERC20 fungible (made non-fungible), you essentially create a denomination based on the deposit that’s similar to a note in real life. Eg, a 20 GNO non-fungible token or a 13 GNO non-fungible token.
+
+new_owner The new owner of the transaction.
+
+signature: Signature on the transaction’s hash.
+
+hash: The hash of the transaction’s details (unsigned).
+
+merkle_hash: The hash of transaction’s details that’s also signed by the sender that’s to be included in the merkle tree.
+
+sender: The person transferring the token.
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Exits</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+针对全局强制非全局数据的数据可用性问题：
+</p>
+<ul class="org-ul">
+<li>区块扣留攻击
+</li>
+<li>Plasma的核心是针对有问题链的退出机制设计
+</li>
+</ul>
+
+<p>
+<span class="underline"><i><b>应对数据可用性问题的退出机制</b></i></span> :
+</p>
+</div>
+<div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> Spent Tx Challenge:</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<p>
+退出交易tx试图退出已花费的不合法交易， <b>Spent Tx Challenge</b> 将立即使退出无效并且要求奖励。
+</p>
+
+
+<div class="figure">
+<p><img src="https://user-images.githubusercontent.com/706123/37399321-ab2b0e7e-2781-11e8-82b0-5f0a509a61c5.png" alt="37399321-ab2b0e7e-2781-11e8-82b0-5f0a509a61c5.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2"><span class="section-number-4">2.5.2</span> Double Spend Challenge:</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<p>
+退出交易tx试图退出包含双重的交易， <b>Double Spend Challenge</b> 将立即使退出无效并且要求奖励。
+</p>
+
+
+<div class="figure">
+<p><img src="https://user-images.githubusercontent.com/706123/37399325-af3de5fe-2781-11e8-83c5-8db932e00f0f.png" alt="37399325-af3de5fe-2781-11e8-83c5-8db932e00f0f.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3"><span class="section-number-4">2.5.3</span> Invalid History Challenge:</h4>
+<div class="outline-text-4" id="text-2-5-3">
+<p>
+欺诈性的运营者可以选择包括从未附加到原始存款的点开始的交易，基本上从空气中创建历史。。如果运营者故意扣留块，也会发生此无效历史记录。 <b>Invalid History Challenge</b> 需要交互，
+就是说一旦受到挑战，另一个用户需要提交跟随它的交易，以证明历史确实有效。为了提出质疑，还需要提交保证金，如果提供后续交易，则会减少保证金。如果没有后续交易，那么它意味着历史确实有效。
+</p>
+
+
+<div class="figure">
+<p><img src="https://user-images.githubusercontent.com/706123/37399327-b1bea55c-2781-11e8-8f31-a06b67e53b10.png" alt="37399327-b1bea55c-2781-11e8-8f31-a06b67e53b10.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Problems &amp; Improvement</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Data Availiability</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+数据可用性问题可以认为是当前区块链领域遇到的最大最难的问题之一，根源在于扩展区块链的同时我们的计算模型发生了变化。
+</p>
+<ul class="org-ul">
+<li>原来：区块链上的数据 -&gt; 计算，改动 -&gt; 区块链上的数据
+</li>
+<li>扩展后：区块链上的数据 + 外部数据 -&gt; 计算，改动 -&gt; 区块链上的数据
+</li>
+</ul>
+<p>
+这就意味着在保证区块链上数据正确的同时还需要保证整个区块链p2p网络中的数据有一定的可用性。这个问题当下业内的思路是概率优化，做到完全解决很难，我们考虑引入欺诈证明、零知识证明、机制设计等方案优化数据不可用的问题。
+</p>
+
+
+<div class="figure">
+<p><img src="https://user-images.githubusercontent.com/706123/37399329-b38eef40-2781-11e8-85b7-d2ba66818605.png" alt="37399329-b38eef40-2781-11e8-85b7-d2ba66818605.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Light client &amp; Fraud proofs</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+区块链引入轻客户端做数据验证有很大的诱惑，可以做到O(log(n))的网络验证效率，在未来的区块链应对可扩展性和分片、跨链等领域都有着不可忽略的优势。同时由于轻客户端存在数据不可用的问题，需要区块链网络有反欺诈证明的能力，我们考虑通过一种全节点提供数据缺陷保险服务和充实区块审计服务的方案应对欺诈证明问题。
+引入零知识证明的优势：
+应对机密交易和隐私问题，零知识证明让我们在传统密码学保障的安全性的技术上可以做到高度机密需要隐私保护的交易数据隐藏。
+不仅如此，零知识证明还可以优化区块链计算过程中的数据量大小和计算量大小，这对于区块链网络中需要大量数据交互和验证的场景来说意义重大。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> More Application scenarios &amp; Probabilistic tumbling</h3>
+<div class="outline-text-3" id="text-3-3">
+<blockquote>
+<p>
+通常，一个支付过程主要发生在两个彼此独立、相对隔绝角色中，资产由付款方流向收款方。
+</p>
+
+
+
+<div class="figure">
+<p><img src="https://ethresear.ch/uploads/default/original/2X/1/122f5c894a6797514a9f44a6cd235ff9b0499ec5.PNG" alt="122f5c894a6797514a9f44a6cd235ff9b0499ec5.PNG" width="400px" />
+</p>
+</div>
+
+<p>
+更多的架构设计和概率优化 &#x2026;
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: wwens</p>
+<p class="date">Created: 2018-10-09 二 10:42</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
