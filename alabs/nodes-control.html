@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>ALabs ADAG 节点控制方案</title>
+<!-- 2018-11-12 Mon 18:55 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="wwens" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="./orgstyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">ALabs ADAG 节点控制方案</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Hashgraph算法在公网环境下的问题</a></li>
+<li><a href="#sec-2">2. ALabs 节点控制方案                                :alabs@Happy Working:</a>
+<ul>
+<li><a href="#sec-2-1">2.1. PlanA：带权限系统的维护白名单一致合约</a></li>
+<li><a href="#sec-2-2">2.2. PlanB：白名单同步及监控报警服务</a></li>
+<li><a href="#sec-2-3">2.3. 技术Spec</a></li>
+<li><a href="#sec-2-4">2.4. 伪代码</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+##+OPTIONS: toc:nil
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Hashgraph算法在公网环境下的问题</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Hashgraph共识算法通过Gossip网络和虚拟投票策略达成交易顺序的共识，该共识的前提是要求网络节点超过2n/3的投票能力具有对famouswitness事件的一致投票结果，其中n是全网的当前投票能力总和，该投票能力通常为节点的持股数量。由于采用了本地投票策略，Hashgraph可以实现较快的交易确认速度。然而该方法存在以下问题：
+</p>
+<ol class="org-ol">
+<li>在广域网环境中，节点波动性较强，全网的投票能力n的波动也随之增强，这可能导致系统长时间无法找到满足2n/3投票一致的事件，从而无法达成共识。
+</li>
+<li>受节点稳定性、处理能力、带宽等因素影响，不同节点处理事件的能力差别较大。若系统中存在大量能力较弱的节点参与投票，同样会造成系统长时间无法达成共识。
+</li>
+<li>广域网环境下，节点频繁波动可能导致节点被分割成多个子网。根据Gossip邻居交换协议，节点会周期性剔除长时间未更新的邻居。当邻居稳定后，节点可在子网内达成共识。此时若子网规模较小，很容易使恶意节点在同一轮产生两个以上famouswitness事件，从而产生双花交易。
+</li>
+<li>随着系统规模增大，节点收到的同步信息越来越多，可以预见系统的吞吐率会随节点数目的增加而降低。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> ALabs 节点控制方案                                :alabs@Happy Working:</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> PlanA：带权限系统的维护白名单一致合约</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>核心思想:</b> 采取一定程度的中心化控制，主要思想为通过带有权限控制的合约类型交易，全网节点达成一致的白名单节点数共识。
+</p>
+
+<p>
+<i>个人认为存在的问题：</i>
+</p>
+
+<ol class="org-ol">
+<li>认为该问题本质为网络层的问题，要解决的问题是如何让在新加入节点的情况下，让全网在白名单节点数上要有基本的一致，准确的说 <b>对大多数的理解一致</b> 。
+</li>
+<li>认为该问题和账本共识逻辑无关， <b>不存在自动达成共识的可能性</b> ，或者 <b>要么区块链就是在解决不存在的问题要么必然引发n多其他问题</b> 。
+</li>
+<li>问题体现在以下几点：
+<ul class="org-ul">
+<li>每个节点在监测到本地白名单和p2p网络的差异后会发起受公共合约权限保护的合约交易
+<ul class="org-ul">
+<li>每个节点都发，合约账户只允许1个单位Token存在的设计，本质上是过滤出一个一致。
+</li>
+<li>即便可以过滤出一致来，仍存在不知道何时应该更新合约权限范围内的白名单的问题，因为该过程仅能说明有的节点发送的交易余额够，能够正确执行，有的不够不能正确执行， <b>并没有实现共识</b> ，p2p网络中节点的白名单的实际状况仍是未知不可控的。
+</li>
+<li>对上述 <b>并没有实现共识</b> 的进一步解释是，节点之间并没有相互的信息校验及确认过程存在，不知道和共识有什么关系。
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>个人理解的共识包括:
+<ul class="org-ul">
+<li>共识信息在多个节点之间可以多次相互校验和确认，并存在相应过程。
+</li>
+<li>认为白名单的数量这个信息在当下的设计中不是一个可以校验的信息，个人看到三种可能
+<ul class="org-ul">
+<li>1&gt; 从一个固定位置，即采用中心化的方案。
+</li>
+<li>2&gt; 借鉴btc破解哈希问题的难度nonce的设计，即数据来自从历史演进的账本不可篡改的记录。
+</li>
+<li>3&gt; 本质上是设计一个独立解决白名单一致的共识机制，传统分布式领域处理一致性的方案也是可以的。
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基于上述原因，该过程和Hashgraph的共识并无任何关系，且支持该过程需要设计额外的交易结构和合约设计对项目未来迭代看不到明显益处。
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> PlanB：白名单同步及监控报警服务</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<b>核心思想:</b> 采用中心化Server的白名单List来解决网络的白名单更新问题，强制所有节点必须定时拉取同步白名单的List。
+</p>
+
+<p>
+<i>个人认为存在的问题：</i>
+</p>
+<ol class="org-ol">
+<li>你说我中心化，我们就聊点别的先。
+</li>
+<li>便于管理、升级、维护和做一些统计的事情。
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 技术Spec</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<i><b>账户权限</b></i>
+</p>
+<ul class="org-ul">
+<li>充值权限
+</li>
+<li>白名单维护权限
+</li>
+<li>交易权限
+</li>
+</ul>
+
+<p>
+<i><b>交易</b></i>
+</p>
+<ul class="org-ul">
+<li>发起交易，消耗1各单位的Token
+</li>
+</ul>
+
+<p>
+<i><b>统计</b></i>
+</p>
+<ul class="org-ul">
+<li>收集网络中白名单更新的数据，便于统计决策
+</li>
+</ul>
+
+<p>
+<i><b>log</b></i>
+</p>
+<ul class="org-ul">
+<li>记录日志
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 伪代码</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-c"></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: wwens</p>
+<p class="date">Created: 2018-11-12 Mon 18:55</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
