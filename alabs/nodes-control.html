@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>ALabs ADAG 节点控制方案</title>
-<!-- 2018-11-13 Tue 10:03 -->
+<!-- 2018-11-13 Tue 10:39 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="wwens" />
@@ -203,7 +203,7 @@ Hashgraph共识算法通过Gossip网络和虚拟投票策略达成交易顺序�
 <ul class="org-ul">
 <li>每个节点都发，合约账户只允许1个单位Token存在的设计，本质上是过滤出一个一致。
 </li>
-<li>即便可以过滤出一致来，仍存在不知道何时应该更新合约权限范围内的白名单的问题，因为该过程仅能说明有的节点发送的交易余额够，能够正确执行，有的不够不能正确执行， <b>并没有实现共识</b> ，p2p网络中节点的白名单的实际状况仍是未知不可控的。
+<li>即便可以过滤出一致来，仍存在不知道何时应该更新合约权限范围内的白名单的问题，因为该过程仅能说明有的节点发送的交易余额够，能够正确执行，有的不够不能正确执行，并没有实现共识，p2p网络中节点的白名单的实际状况仍是未知不可控的。
 </li>
 <li>对上述 <b>并没有实现共识</b> 的进一步解释是，节点之间并没有相互的信息校验及确认过程存在，不知道和共识有什么关系。
 </li>
@@ -211,11 +211,27 @@ Hashgraph共识算法通过Gossip网络和虚拟投票策略达成交易顺序�
 </li>
 </ul>
 </li>
-<li>个人理解的共识包括:
+<li>综合之前多次的讨论大概是以下思路：
+<ul class="org-ul">
+<li>假设网络已存在5个节点:A、B、C、D、E，新节点F要加入网络，各节点白名但即为Num<sub>n</sub>
+<ul class="org-ul">
+<li>(1) A说Num<sub>n</sub>=6，其余各节点都改为Num<sub>n</sub>=6
+</li>
+<li>(2) 设计一些特殊的交易加入账本共识逻辑中
+</li>
+<li>(3) 依赖一个已共识的交易中不该动的数据，即寄希望于智能合约来实现
+</li>
+</ul>
+</li>
+<li>上述三种方案，无论怎样设计都是假设拜占庭将军问题不存在天然就是共识的，都是要在代码中写一段死逻辑，故并没有实现共识 ，且 <b>放大了风险，并不是控制了风险</b> ，因为任何一个节点都存在 <b>单点故障</b> ，有篡改数据的能力，并影响算法的正常逻辑。
+</li>
+</ul>
+</li>
+<li>个人理解的共识包括但不限于:
 <ul class="org-ul">
 <li>共识信息在多个节点之间可以多次相互校验和确认，并存在相应过程。
 </li>
-<li>认为白名单的数量这个信息在当下的设计中不是一个可以校验的信息，个人看到三种可能
+<li>认为白名单的数量这个信息在当下的设计中不是一个可以校验的信息，个人看到三种可能的方向
 <ul class="org-ul">
 <li>1&gt; 从一个固定位置，即采用中心化的方案。
 </li>
@@ -227,7 +243,9 @@ Hashgraph共识算法通过Gossip网络和虚拟投票策略达成交易顺序�
 </li>
 </ul>
 </li>
-<li>基于上述原因，该过程和Hashgraph的共识并无任何关系，且支持该过程需要设计额外的交易结构和合约设计对项目未来迭代看不到明显益处。
+<li>基于上述原因，该过程和Hashgraph的共识并无任何关系。
+</li>
+<li>支持该过程需要设计额外的交易结构和合约设计对项目未来迭代看不到明显益处。
 </li>
 </ol>
 </div>
@@ -286,6 +304,10 @@ Hashgraph共识算法通过Gossip网络和虚拟投票策略达成交易顺序�
 <ol class="org-ol">
 <li>你说我中心化，我们就聊点别的先。
 </li>
+<li>有 <b>单点故障问题</b> ，且每个节点都有单点故障问题，故假设是所有节点都正常。
+</li>
+<li>突破性的解决该问题，只能走 <b>算法升级</b> 的路，没有其他真正有意义的方案，可行都很难做到，共识算法对区块链项目的意义由此可见一斑。
+</li>
 <li>便于管理、升级、维护和做一些统计的事情。
 </li>
 </ol>
@@ -320,7 +342,7 @@ Hashgraph共识算法通过Gossip网络和虚拟投票策略达成交易顺序�
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: wwens</p>
-<p class="date">Created: 2018-11-13 Tue 10:03</p>
+<p class="date">Created: 2018-11-13 Tue 10:39</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
