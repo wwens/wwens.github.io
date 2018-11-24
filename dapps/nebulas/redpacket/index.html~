@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <meta name="description" content="Nebulas is a next generation public blockchain, aiming for a continuously improving ecosystem.">
+    <title>星链红包神器 -- 基于星云链的拼手气红包DAPP，拉上朋友一起抢</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/web/icons/iconfont.css">
+    <link rel="stylesheet" href="assets/animate.css/animate.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="assets/theme/css/style.css">
+    <link rel="stylesheet" href="assets/theme/css/common.css">
+    <link rel="stylesheet" href="assets/theme/css/inviting.css?v=20180507">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101203737-1"></script>
+    <script src=nebPay.js></script>
+
+    <style>
+        .container .formtip {
+            color: red;
+            font-size: 12px;
+        }
+
+        .container .emailtip {
+            color: red;
+            font-size: 12px;
+        }
+
+        .container .passwordtip {
+            color: red;
+            font-size: 12px;
+        }
+
+        body {
+            background-image: url('background.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center top;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+
+    //to check if the extension is installed
+    //if the extension is installed, var "webExtensionWallet" will be injected in to web page
+    if (typeof (webExtensionWallet) === "undefined") {
+        alert("请先安装星云钱包插件.");
+    }
+
+    function onClickCallDapp() {
+        var to = "n231XMw469h4uLuEM14mZDpKyj2JVEVM1Sv";
+        var value = "1";
+        var callFunction = "bid";
+        var
+            callArgs = ""; //"[\"" + document.getElementById("inputParameter").value.trim() + "\",\"nick\"]"; //in the form of ["args","nick"]
+        nebPay.call(to,
+            value,
+            callFunction,
+            callArgs,
+            {
+                qrcode: {
+                    showQRCode: false
+                },
+                goods: {
+                    name: "Bid",
+                    desc: "Nas for bid"
+                },
+                listener: cbCallDapp
+            });
+    }
+
+    function cbCallDapp(resp) {
+        console.log("callback resp: " + JSON.stringify(resp));
+        //document.getElementById("callResult").innerHTML = "开奖结果将以短信形式推送给您。（短信接口开发中）";
+    }
+    </script>
+    <section id="menu">
+        <nav class="navbar navbar-dropdown bg-color">
+            <div class="container">
+                <div class="mbr-table">
+                    <div class="mbr-table-cell">
+                        <div class="navbar-brand">
+                            <a href="https://nebulas.io" class="navbar-logo" target="_blank">
+                                <img src="assets/images/nebulasx60.png" alt="Nebulas">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mbr-table-cell">
+                        <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                            <div class="hamburger-icon"></div>
+                        </button>
+                        <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
+                            <li class="nav-item">
+                                <a class="nav-link link" href="http://bid.nebapp.com">1NAS夺宝</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link " href="https://github.com/ChengOrangeJu/WebExtensionWallet" target="_blank">星云钱包插件</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link " href="https://explorer.nebulas.io/#/tx/e8ba7540c3587775ee626a564401e0927db55359cf3e0f80a38c35bdabbc7c1e" target="_blank">合约代码</a>
+                            </li>
+                        </ul>
+                        <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                            <div class="close-icon"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <section class="mbr-section mbr-section-full  mbr-section__container--first">
+        <div class="inviting">
+            <div class="invate-banner">
+                <div class="banner-wrap">
+                    <h3>基于星云链的拼手气红包DAPP，拉上朋友一起抢吧</h3>
+                    <p>
+                        <h3>星云红包神器</h3>
+                    </p>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="inviting-box">
+                  <div class="inviting-form">
+                        <p>拼手气红包步骤说明：</p>
+                        <p>输入红包份数，支付NAS做为红包金额，支付完成后生成红包链接，分享给朋友一起抢吧</p>
+                        <p>红包份数最大1000份，一小时内没有抢完，剩余的NAS退还到原始发红包账户</p>
+
+                        <label>
+                            <!--<strong>手机号（接收开奖信息，非必填）:</strong>-->
+                            <!--<input type="text" id="inputParameter" />-->
+			    <input type="label" = value"10" id="partNumber"/>
+                            <input type="button" value="包红包" id="buttonCallDapp" onclick="onClickCallDapp();" />
+                            <!--<p id="callResult" style="color:#d2691e; font-size: 12px;"></p>-->
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </section>
+    <video autoplay="true" name="media" onloadstart="this.volume=0.05" source src="Jazz - I Tried to Tell You.mp3" type="audio/mpeg"></video>
+
+    <section class="mbr-section mbr-section-sm-padding mbr-footer gray-page">
+        <div class="container">
+            <div class="row">
+                <div class="mbr-footer-content col-xs-12 text-xs-center footer-title">
+                    POWERED BY&nbsp;&nbsp;
+                    <a href="https://nebulas.io" target="_blank">
+                        <img src="assets/images/nebulasx60.png" alt="Nebulas">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
